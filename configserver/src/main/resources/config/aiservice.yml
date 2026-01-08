@@ -1,0 +1,35 @@
+spring:
+  data:
+    mongodb:
+      #      uri: mongodb+srv://arbid29_db_user:GxmbUSxr3JXYKPT3@cluster0.rrkbqql.mongodb.net/activity
+      uri: mongodb://localhost:27017/aiuse
+      database: aiuse
+      auto-index-creation: true
+  kafka:
+    topic:
+      name: activity-events
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      group-id: activity-processor-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring.json.use.type.headers: false
+        #maps the conusmed data to below Activity
+        spring.json.value.default.type: com.example.aiservice.model.Activity
+        spring.json.trusted.packages: "*"
+
+server:
+  port: 8085
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+gemini:
+  api:
+    url: ${GEMINI_URL}
+    key: ${GEMINI_KEY}
+

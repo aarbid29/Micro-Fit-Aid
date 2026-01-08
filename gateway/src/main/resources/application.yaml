@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: gateway
+  config:
+    import: optional:configserver:http://localhost:8087
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
