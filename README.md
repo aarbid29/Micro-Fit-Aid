@@ -1,11 +1,10 @@
-<img width="768" height="919" alt="IMG_4240" src="https://github.com/user-attachments/assets/ab7d5a16-dc2d-45dd-a79d-7401b7c51226" />
 # Micro-Fit-Aid
 
 A fitness tracking application built on a microservices architecture using Spring Boot. Users can log workout activities and automatically receive AI-generated fitness recommendations powered by Google Gemini. The system uses Keycloak for authentication, Apache Kafka for async communication between services, and Spring Cloud for service discovery and centralized configuration.
 
 ---
 
-<img width="768" height="919" alt="IMG_4240" src="https://github.com/user-attachments/assets/7046f520-802a-4bda-adfc-090e6473aa1b" />
+<img width="300" height="600" alt="IMG_4240" src="https://github.com/user-attachments/assets/7046f520-802a-4bda-adfc-090e6473aa1b" />
 
 
 
