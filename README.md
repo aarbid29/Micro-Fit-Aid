@@ -3,7 +3,7 @@
 A fitness tracking application built on a microservices architecture using Spring Boot. Users can log workout activities and automatically receive AI-generated fitness recommendations powered by Google Gemini. The system uses Keycloak for authentication, Apache Kafka for async communication between services, and Spring Cloud for service discovery and centralized configuration.
 
 ---
-#Architecture
+## Architecture
 <img width="1024" height="559" alt="IMG_4241" src="https://github.com/user-attachments/assets/134716c4-c9c2-4596-b553-e3c51404fe02" />
 
 
