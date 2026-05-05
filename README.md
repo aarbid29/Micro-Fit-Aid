@@ -22,7 +22,7 @@ A fitness tracking application built on a microservices architecture using Sprin
 
 The single entry point for all external requests. Built with Spring Cloud Gateway (WebFlux / reactive).
 
-- Validates JWT tokens by fetching Keycloak's public keys from the `jwk-set-uri` (`http://localhost:8181/realms/fit-aid/protocol/openid-connect/certs`). Validation is purely cryptographic — no credentials are checked here.
+- Validates JWT tokens by fetching Keycloak's public keys from the `jwk-set-uri` (`http://localhost:8181/realms/fit-aid/protocol/openid-connect/certs`). Validation is purely cryptographic , no credentials are checked here.
 - Runs a `KeycloakUserSyncFilter` on every authenticated request. This filter parses the JWT using `nimbus-jose-jwt`, extracts the user's Keycloak ID, email, and name, then calls the User Service to register the user in the local database if they do not already exist.
 - Injects an `X-User-ID` header (set to the Keycloak `sub` claim) into every forwarded request so downstream services can identify the caller without handling JWTs themselves.
 - Routes requests by path prefix using Eureka-based load balancing (`lb://SERVICENAME`), meaning no hardcoded service addresses are needed.
@@ -37,9 +37,9 @@ The single entry point for all external requests. Built with Spring Cloud Gatewa
 Manages user profiles in the application's own database, independent of Keycloak's identity store.
 
 Endpoints:
-- `POST /api/users/register` — creates a new user record. Called automatically by the Gateway's sync filter on a user's first login.
-- `GET /api/users/{userId}` — retrieves a user's profile.
-- `GET /api/users/{userId}/validate` — returns true or false indicating whether a user with the given Keycloak ID exists. Used by the Activity Service before accepting a new activity log.
+- `POST /api/users/register` : creates a new user record. Called automatically by the Gateway's sync filter on a user's first login.
+- `GET /api/users/{userId}` : retrieves a user's profile.
+- `GET /api/users/{userId}/validate` : returns true or false indicating whether a user with the given Keycloak ID exists. Used by the Activity Service before accepting a new activity log.
 
 The `User` entity stores: `keycloakId`, `email`, `firstName`, `lastName`, `password` (BCrypt-hashed), `role`, and timestamps.
 
@@ -53,8 +53,8 @@ The `User` entity stores: `keycloakId`, `email`, `firstName`, `lastName`, `passw
 Handles the logging and retrieval of workout activities.
 
 Endpoints:
-- `POST /api/activities` — logs a new activity. Before persisting, calls `UserValidationService` which makes a synchronous HTTP GET to the User Service's `/validate` endpoint to confirm the user exists. After saving, publishes the full activity object as JSON to the `activity-events` Kafka topic.
-- `GET /api/activities` — returns all activities belonging to the authenticated user, identified via the `X-User-ID` header.
+- `POST /api/activities` : logs a new activity. Before persisting, calls `UserValidationService` which makes a synchronous HTTP GET to the User Service's `/validate` endpoint to confirm the user exists. After saving, publishes the full activity object as JSON to the `activity-events` Kafka topic.
+- `GET /api/activities` : returns all activities belonging to the authenticated user, identified via the `X-User-ID` header.
 
 The `Activity` document includes: `userId`, `type` (enum: RUNNING, CYCLING, SWIMMING, WEIGHTLIFTING, YOGA, WALKING, HIIT), `duration`, `caloriesBurned`, `startTime`, and `additionalMetrics` (a flexible `Map<String, Object>` for extra data).
 
@@ -73,8 +73,8 @@ Generates personalized fitness recommendations by analyzing logged activities us
 - The JSON response is parsed and persisted as a `Recommendation` document in MongoDB, linked to both the `activityId` and `userId`.
 
 Endpoints:
-- `GET /api/recommendations/user/{userId}` — all recommendations for a user.
-- `GET /api/recommendations/activity/{activityId}` — the recommendation generated for a specific activity.
+- `GET /api/recommendations/user/{userId}` : all recommendations for a user.
+- `GET /api/recommendations/activity/{activityId}` : the recommendation generated for a specific activity.
 
 ---
 
@@ -91,10 +91,10 @@ spring:
 ```
 
 Config files served:
-- `gateway.yml` — gateway port, Keycloak `jwk-set-uri`, routing rules
-- `userproject.yml` — PostgreSQL connection, JPA settings
-- `activityservice.yml` — MongoDB URI, Kafka producer config, port
-- `aiservice.yml` — MongoDB URI, Kafka consumer config, Gemini API URL and key, port
+- `gateway.yml` : gateway port, Keycloak `jwk-set-uri`, routing rules
+- `userproject.yml` : PostgreSQL connection, JPA settings
+- `activityservice.yml` : MongoDB URI, Kafka producer config, port
+- `aiservice.yml` : MongoDB URI, Kafka consumer config, Gemini API URL and key, port
 
 ---
 
@@ -152,13 +152,13 @@ Keycloak is configured with realm `fit-aid` and runs on port 8181.
 
 Services must be started in this order because each depends on the ones before it:
 
-1. **Config Server** — must be up first so all other services can fetch their configuration on startup
-2. **Eureka Server** — must be running before services try to register themselves
-3. **Keycloak** — must be running before the Gateway can validate tokens
+1. **Config Server** : must be up first so all other services can fetch their configuration on startup
+2. **Eureka Server** : must be running before services try to register themselves
+3. **Keycloak** : must be running before the Gateway can validate tokens
 4. **User Service**
 5. **Activity Service**
 6. **AI Service**
-7. **API Gateway** — start last, once all downstream services are registered in Eureka
+7. **API Gateway** : start last, once all downstream services are registered in Eureka
 
 ### Environment Variables
 
