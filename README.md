@@ -194,29 +194,3 @@ From within any individual service directory:
 
 ---
 
-## Data Flow Summary
-
-```
-User logs in
-  -> Keycloak issues JWT
-
-User sends POST /api/activities with JWT
-  -> Gateway validates JWT signature against Keycloak public keys
-  -> KeycloakUserSyncFilter syncs user to PostgreSQL if first login
-  -> Gateway injects X-User-ID header, routes to Activity Service
-
-Activity Service receives request
-  -> Calls User Service to validate user exists
-  -> Saves activity document to MongoDB
-  -> Publishes activity to Kafka topic (activity-events)
-
-AI Service Kafka consumer receives activity event
-  -> Builds structured prompt with activity data
-  -> Calls Google Gemini API
-  -> Parses JSON response
-  -> Saves recommendation document to MongoDB
-
-User sends GET /api/recommendations/user/{userId}
-  -> Gateway routes to AI Service
-  -> Returns stored recommendations
-```
