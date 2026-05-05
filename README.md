@@ -1,33 +1,19 @@
+<img width="768" height="919" alt="IMG_4240" src="https://github.com/user-attachments/assets/ab7d5a16-dc2d-45dd-a79d-7401b7c51226" />
 # Micro-Fit-Aid
 
 A fitness tracking application built on a microservices architecture using Spring Boot. Users can log workout activities and automatically receive AI-generated fitness recommendations powered by Google Gemini. The system uses Keycloak for authentication, Apache Kafka for async communication between services, and Spring Cloud for service discovery and centralized configuration.
 
 ---
 
-## Architecture Overview
+<img width="768" height="919" alt="IMG_4240" src="https://github.com/user-attachments/assets/7046f520-802a-4bda-adfc-090e6473aa1b" />
 
-The application is composed of six independent services that communicate over HTTP and Kafka. All client traffic enters through the API Gateway, which validates JWT tokens issued by Keycloak before forwarding requests to the appropriate downstream service.
 
-```
-Frontend (React, port 5173)
-        |
-        v
-API Gateway (port 8080)  <---  Keycloak OAuth2 / JWT (port 8181)
-        |
-        |--- /api/users/**           --> User Service     (port 8089) --> PostgreSQL
-        |--- /api/activities/**      --> Activity Service (port 8083) --> MongoDB
-        |--- /api/recommendations/** --> AI Service       (port 8085) --> MongoDB
-                                               ^
-Activity Service -- Kafka (activity-events) ---+
-                                               |
-                                        Google Gemini API
 
-Supporting Infrastructure:
-  Config Server  (port 8087)  -- serves config to all services
-  Eureka Server  (port 8761)  -- service registry and discovery
-```
+
 
 ---
+
+
 
 ## Services
 
