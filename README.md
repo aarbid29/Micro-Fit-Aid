@@ -4,7 +4,7 @@ A fitness tracking application built on a microservices architecture using Sprin
 
 ---
 
-<img width="600" height="900" alt="IMG_4240" src="https://github.com/user-attachments/assets/7046f520-802a-4bda-adfc-090e6473aa1b" />
+<img width="700" height="900" alt="IMG_4240" src="https://github.com/user-attachments/assets/7046f520-802a-4bda-adfc-090e6473aa1b" />
 
 
 
